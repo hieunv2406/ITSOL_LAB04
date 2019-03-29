@@ -10,10 +10,10 @@ import model.AccountModel;
 import model.StudentModel;
 
 public class Main {
-	List<Account> listAc = new ArrayList<>();
-	List<Account> listAc1 = new ArrayList<>();
-	List<Student> listStudents = new ArrayList<>();
-	List<Student> listAllStudents = new ArrayList<>();
+	List<Account> listAc = new ArrayList<>(); // list chua danh sach cac account
+	List<Account> listAc1 = new ArrayList<>(); // list chua danh sach acc dang dang nhap
+	List<Student> listStudents = new ArrayList<>(); // list chua danh sach hoc vien thuoc quan ly cua acc dang dang nhap
+	List<Student> listAllStudents = new ArrayList<>(); // list chua danh sach tat ca hoc vien
 
 	public static void main(String[] args) {
 		Main main1 = new Main();
@@ -86,13 +86,13 @@ public class Main {
 					main1.updateStudent(student);
 					break;
 				case 4:
-
+					main1.deleteStudent(student);
 					break;
 				case 5:
-
+					main1.findStudentName();
 					break;
 				case 6:
-
+					main1.sortByStudentName();
 					break;
 				case 7:
 					System.exit(0);
@@ -203,9 +203,11 @@ public class Main {
 					break;
 				} else {
 					check1 = false;
-
 				}
 
+			}
+			if (check1 == false) {
+				System.out.println("khong tim thay StudentID");
 			}
 
 		} while (check1 == false);
@@ -235,7 +237,7 @@ public class Main {
 		System.out.println("Nhap Account_id");
 		student.setAccount_Id(sc.nextLine());
 
-		boolean check = stM.updateStudent(student);
+		boolean check = stM.updateStudentById(student);
 		if (check) {
 			System.out.println("Sua thanh cong");
 		} else {
@@ -243,6 +245,84 @@ public class Main {
 		}
 
 	}
+
+	public void deleteStudent(Student student) {
+		StudentModel stM = new StudentModel();
+		Scanner sc = new Scanner(System.in);
+		listAllStudents = stM.getAllStudent();
+		boolean check1 = true;
+		do {
+
+			System.out.println("Nhap StudentID can xoa: ");
+			String id = sc.nextLine();
+			for (Student st : listAllStudents) {
+				if (id.equals(st.getId())) {
+					System.out.println("Thong tin hoc vien truoc khi sua:");
+					System.out.println(st.toString());
+					student.setId(st.getId());
+					check1 = true;
+					break;
+				} else {
+					check1 = false;
+				}
+			}
+			if (check1 == false) {
+				System.out.println("khong tim thay StudentID");
+			}
+		} while (check1 == false);
+
+		boolean check = stM.deleteStudentById(student);
+		if (check) {
+			System.out.println("Xoa thanh cong");
+		} else {
+			System.out.println("Xoa that bai");
+		}
+	}
+
+//	public void sortByStudentClass() {
+//
+//
+//		for (Student st : listAllStudents) {
+//			String cl = null;
+//			if(cl==null) {
+//				cl=st.getStudentClass();
+//				System.out.println(cl.toString());
+//			}else if(cl.equals(st.getStudentClass())) {
+//
+//			}
+//		}
+//	}
+
+	public void findStudentName() {
+		Scanner sc =  new Scanner(System.in);
+		StudentModel stM = new StudentModel();
+		List<Student> listfind = new ArrayList<>();
+		boolean check = true;
+		do {
+		System.out.println("Nhap ten hoc vien muon tim kiem: ");
+		String studentName = sc.nextLine();
+		listfind = stM.findStudentBy(studentName);
+			if (listfind.isEmpty()) {
+				System.out.println("khong tim thay hoc vien can tim!");
+				check = false;
+			} else {
+		for (Student student : listfind) {
+			System.out.println(student.toString());
+					check = true;
+		}
+			}
+		} while (check == false);
+	}
+
+	public void sortByStudentName() {
+		StudentModel stM = new StudentModel();
+		List<Student> listSort = new ArrayList<>();
+		listSort = stM.sortByStudentName();
+		for (Student student : listSort) {
+			System.out.println(student.toString());
+		}
+	}
+
 	}
 
 

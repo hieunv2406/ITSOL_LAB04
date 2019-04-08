@@ -279,20 +279,6 @@ public class Main {
 		}
 	}
 
-//	public void sortByStudentClass() {
-//
-//
-//		for (Student st : listAllStudents) {
-//			String cl = null;
-//			if(cl==null) {
-//				cl=st.getStudentClass();
-//				System.out.println(cl.toString());
-//			}else if(cl.equals(st.getStudentClass())) {
-//
-//			}
-//		}
-//	}
-
 	public void findStudentName() {
 		Scanner sc =  new Scanner(System.in);
 		StudentModel stM = new StudentModel();
